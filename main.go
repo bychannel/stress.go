@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"strings"
 
-	"go-stress-testing/model"
-	"go-stress-testing/server"
+	"github.com/bychannel/stress.go/model"
+	"github.com/bychannel/stress.go/server"
 )
 
 // array 自定义数组参数

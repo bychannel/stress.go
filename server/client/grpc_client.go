@@ -1,4 +1,3 @@
-// Package client grpc 客户端
 package client
 
 import (
@@ -29,7 +28,6 @@ func NewGrpcSocket(address string) (s *GrpcSocket) {
 	return
 }
 
-// getAddress 获取地址
 func (g *GrpcSocket) getAddress() (address string) {
 	return g.address
 }

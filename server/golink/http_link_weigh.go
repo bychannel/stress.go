@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"go-stress-testing/model"
+	"github.com/bychannel/stress.go/model"
 )
 
 // ReqListWeigh 接口加权压测

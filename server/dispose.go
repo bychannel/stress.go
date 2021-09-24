@@ -3,15 +3,15 @@ package server
 
 import (
 	"fmt"
-	httplongclinet "go-stress-testing/server/client/http_longclinet"
+	httplongclinet "github.com/bychannel/stress.go/server/client/http_longclinet"
 	"sync"
 	"time"
 
-	"go-stress-testing/model"
-	"go-stress-testing/server/client"
-	"go-stress-testing/server/golink"
-	"go-stress-testing/server/statistics"
-	"go-stress-testing/server/verify"
+	"github.com/bychannel/stress.go/model"
+	"github.com/bychannel/stress.go/server/client"
+	"github.com/bychannel/stress.go/server/golink"
+	"github.com/bychannel/stress.go/server/statistics"
+	"github.com/bychannel/stress.go/server/verify"
 )
 
 const (

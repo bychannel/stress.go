@@ -1,4 +1,3 @@
-// Package model 请求数据模型package model
 package model
 
 import (
@@ -11,39 +10,29 @@ import (
 	"time"
 )
 
-// 返回 code 码
+// 返回code码
 const (
-	// HTTPOk 请求成功
-	HTTPOk = 200
-	// RequestErr 请求错误
-	RequestErr = 509
-	// ParseError 解析错误
+	HTTPOk     = 200 // 请求成功
+	RequestErr = 509 // 请求错误
 	ParseError = 510 // 解析错误
 )
 
 // 支持协议
 const (
-	// FormTypeHTTP http 协议
-	FormTypeHTTP = "http"
-	// FormTypeWebSocket webSocket 协议
-	FormTypeWebSocket = "webSocket"
-	// FormTypeGRPC grpc 协议
-	FormTypeGRPC = "grpc"
+	FormTypeHTTP      = "http"      // http协议
+	FormTypeWebSocket = "webSocket" // webSocket协议
+	FormTypeGRPC      = "grpc"      // grpc协议
 )
 
 // 校验函数
 var (
-	// verifyMapHTTP http 校验函数
-	verifyMapHTTP = make(map[string]VerifyHTTP)
-	// verifyMapHTTPMutex http 并发锁
-	verifyMapHTTPMutex sync.RWMutex
-	// verifyMapWebSocket webSocket 校验函数
-	verifyMapWebSocket = make(map[string]VerifyWebSocket)
-	// verifyMapWebSocketMutex webSocket 并发锁
-	verifyMapWebSocketMutex sync.RWMutex
+	verifyMapHTTP           = make(map[string]VerifyHTTP)      // http校验函数
+	verifyMapHTTPMutex      sync.RWMutex                       // http并发锁
+	verifyMapWebSocket      = make(map[string]VerifyWebSocket) // webSocket校验函数
+	verifyMapWebSocketMutex sync.RWMutex                       // webSocket并发锁
 )
 
-// RegisterVerifyHTTP 注册 http 校验函数
+// RegisterVerifyHTTP 注册http校验函数
 func RegisterVerifyHTTP(verify string, verifyFunc VerifyHTTP) {
 	verifyMapHTTPMutex.Lock()
 	defer verifyMapHTTPMutex.Unlock()
@@ -65,26 +54,26 @@ type Verify interface {
 	GetResult() bool // 返回是否成功
 }
 
-// VerifyHTTP http 验证
+// VerifyHTTP http验证
 type VerifyHTTP func(request *Request, response *http.Response) (code int, isSucceed bool)
 
-// VerifyWebSocket webSocket 验证
+// VerifyWebSocket webSocket验证
 type VerifyWebSocket func(request *Request, seq string, msg []byte) (code int, isSucceed bool)
 
 // Request 请求数据
 type Request struct {
-	URL       string            // URL
+	URL       string            // 请求url
 	Form      string            // http/webSocket/tcp
 	Method    string            // 方法 GET/POST/PUT
-	Headers   map[string]string // Headers
-	Body      string            // body
+	Headers   map[string]string // 请求头
+	Body      string            // 请求体
 	Verify    string            // 验证的方法
 	Timeout   time.Duration     // 请求超时时间
 	Debug     bool              // 是否开启Debug模式
 	MaxCon    int               // 每个连接的请求数
 	HTTP2     bool              // 是否使用http2.0
 	Keepalive bool              // 是否开启长连接
-	Code      int               //验证的状态码
+	Code      int               // 验证的状态码
 }
 
 // GetBody 获取请求数据
@@ -92,7 +81,7 @@ func (r *Request) GetBody() (body io.Reader) {
 	return strings.NewReader(r.Body)
 }
 
-// getVerifyKey 获取校验 key
+// getVerifyKey 获取校验key
 func (r *Request) getVerifyKey() (key string) {
 	return fmt.Sprintf("%s.%s", r.Form, r.Verify)
 }
@@ -273,7 +262,6 @@ type RequestResults struct {
 
 // SetID 设置请求唯一ID
 func (r *RequestResults) SetID(chanID uint64, number uint64) {
-	id := fmt.Sprintf("%d_%d", chanID, number)
-	r.ID = id
+	r.ID = fmt.Sprintf("%d_%d", chanID, number)
 	r.ChanID = chanID
 }

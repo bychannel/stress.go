@@ -10,7 +10,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"go-stress-testing/model"
+	"github.com/bychannel/stress.go/model"
 )
 
 // getZipData 处理gzip压缩

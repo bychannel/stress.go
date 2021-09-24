@@ -2,7 +2,7 @@ package httplongclinet
 
 import (
 	"crypto/tls"
-	"go-stress-testing/model"
+	"github.com/bychannel/stress.go/model"
 	"golang.org/x/net/http2"
 	"net"
 	"net/http"

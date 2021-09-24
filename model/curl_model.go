@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"go-stress-testing/helper"
+	"github.com/bychannel/stress.go/helper"
 )
 
 // CURL curl参数解析
@@ -138,7 +138,7 @@ func (c *CURL) GetURL() (url string) {
 	return
 }
 
-// GetMethod 获取 请求方式
+// GetMethod 获取请求方式
 func (c *CURL) GetMethod() (method string) {
 	keys := []string{"-X", "--request"}
 	value := c.getDataValue(keys)
