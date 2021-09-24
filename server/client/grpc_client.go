@@ -28,10 +28,6 @@ func NewGrpcSocket(address string) (s *GrpcSocket) {
 	return
 }
 
-func (g *GrpcSocket) getAddress() (address string) {
-	return g.address
-}
-
 // Close 关闭
 func (g *GrpcSocket) Close() (err error) {
 	if g == nil {

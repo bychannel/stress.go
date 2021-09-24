@@ -1,4 +1,3 @@
-// Package verify 校验
 package verify
 
 import (
@@ -19,7 +18,7 @@ type WebSocketResponseJSON struct {
 	} `json:"response"`
 }
 
-// WebSocketJSON 通过返回的Body 判断
+// WebSocketJSON 通过返回的Body判断
 // 返回示例: {"seq":"1566276523281-585638","cmd":"heartbeat","response":{"code":200,"codeMsg":"Success","data":null}}
 // code 取body中的返回code
 func WebSocketJSON(request *model.Request, seq string, msg []byte) (code int, isSucceed bool) {
@@ -42,7 +41,7 @@ func WebSocketJSON(request *model.Request, seq string, msg []byte) (code int, is
 		}
 	}
 	// 开启调试模式
-	if request.GetDebug() {
+	if request.Debug {
 		fmt.Printf("请求结果 seq:%s body:%s \n", seq, string(msg))
 	}
 	return

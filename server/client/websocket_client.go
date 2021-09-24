@@ -1,4 +1,3 @@
-// Package client webSocket 客户端
 package client
 
 import (

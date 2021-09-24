@@ -1,14 +1,12 @@
-// Package model 数据模型
 package model
 
 import (
 	"encoding/json"
 	"errors"
+	"github.com/bychannel/stress.go/utils"
 	"io/ioutil"
 	"os"
 	"strings"
-
-	"github.com/bychannel/stress.go/helper"
 )
 
 // CURL curl参数解析
@@ -146,7 +144,7 @@ func (c *CURL) GetMethod() (method string) {
 		return c.defaultMethod()
 	}
 	method = strings.ToUpper(value[0])
-	if helper.InArrayStr(method, []string{"GET", "POST", "PUT", "DELETE"}) {
+	if utils.InArrayStr(method, []string{"GET", "POST", "PUT", "DELETE"}) {
 		return method
 	}
 	return c.defaultMethod()

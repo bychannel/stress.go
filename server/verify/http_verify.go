@@ -1,4 +1,3 @@
-// Package verify 校验
 package verify
 
 import (
@@ -30,7 +29,7 @@ func getZipData(response *http.Response) (body []byte, err error) {
 	return
 }
 
-// HTTPStatusCode 通过 HTTP 状态码判断是否请求成功
+// HTTPStatusCode 通过状态码判断是否请求成功
 func HTTPStatusCode(request *model.Request, response *http.Response) (code int, isSucceed bool) {
 	defer func() {
 		_ = response.Body.Close()
@@ -40,7 +39,7 @@ func HTTPStatusCode(request *model.Request, response *http.Response) (code int, 
 		isSucceed = true
 	}
 	// 开启调试模式
-	if request.GetDebug() {
+	if request.Debug {
 		body, err := getZipData(response)
 		fmt.Printf("请求结果 httpCode:%d body:%s err:%v \n", response.StatusCode, string(body), err)
 	}
@@ -85,7 +84,7 @@ func HTTPJson(request *model.Request, response *http.Response) (code int, isSucc
 			}
 		}
 		// 开启调试模式
-		if request.GetDebug() {
+		if request.Debug {
 			fmt.Printf("请求结果 httpCode:%d body:%s err:%v \n", response.StatusCode, string(body), err)
 		}
 	}

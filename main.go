@@ -1,4 +1,3 @@
-// Package main go 实现的压测工具
 package main
 
 import (
@@ -22,7 +21,6 @@ func (a *array) String() string {
 // Set set
 func (a *array) Set(s string) error {
 	*a = append(*a, s)
-
 	return nil
 }
 
@@ -36,7 +34,7 @@ var (
 	headers     array             // 自定义头信息传递给服务器
 	body        = ""              // HTTP POST方式传送数据
 	maxCon      = 1               // 单个连接最大请求数
-	code        = 200             //成功状态码
+	code        = 200             // 成功状态码
 	http2       = false           // 是否开http2.0
 	keepalive   = false           // 是否开启长连接
 )
@@ -58,7 +56,6 @@ func init() {
 	flag.Parse()
 }
 
-// main go 实现的压测工具
 // 编译可执行文件
 //go:generate go build main.go
 func main() {
@@ -77,8 +74,8 @@ func main() {
 		return
 	}
 	fmt.Printf("\n 开始启动  并发数:%d 请求数:%d 请求参数: \n", concurrency, totalNumber)
+	// 打印一下构建的请求数据
 	request.Print()
 	// 开始处理
 	server.Dispose(concurrency, totalNumber, request)
-	return
 }

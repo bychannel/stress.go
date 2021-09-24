@@ -3,15 +3,14 @@ package golink
 
 import (
 	"context"
-	"github.com/bychannel/stress.go/server/statistics"
 	"sync"
 	"time"
 
-	"github.com/bychannel/stress.go/helper"
-	pb "github.com/bychannel/stress.go/proto"
-
 	"github.com/bychannel/stress.go/model"
+	pb "github.com/bychannel/stress.go/proto"
 	"github.com/bychannel/stress.go/server/client"
+	"github.com/bychannel/stress.go/server/statistics"
+	"github.com/bychannel/stress.go/utils"
 )
 
 // Grpc grpc 接口请求
@@ -63,7 +62,7 @@ func grpcRequest(chanID uint64, ch chan<- *model.RequestResults, i uint64, reque
 			}
 		}
 	}
-	requestTime := uint64(helper.DiffNano(startTime))
+	requestTime := uint64(utils.DiffNano(startTime))
 	statistics.RequestTimeList = append(statistics.RequestTimeList, requestTime)
 	requestResults := &model.RequestResults{
 		Time:      requestTime,

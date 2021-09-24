@@ -1,9 +1,7 @@
-// Package statistics 统计数据
 package statistics
 
 import (
 	"fmt"
-	"github.com/bychannel/stress.go/tools"
 	"sort"
 	"strings"
 	"sync"
@@ -13,6 +11,7 @@ import (
 	"golang.org/x/text/message"
 
 	"github.com/bychannel/stress.go/model"
+	"github.com/bychannel/stress.go/tools"
 )
 
 var (
@@ -63,7 +62,6 @@ func ReceivingResults(concurrent uint64, ch <-chan *model.RequestResults, wg *sy
 	}()
 	header()
 	for data := range ch {
-		// fmt.Println("处理一条数据", data.ID, data.Time, data.IsSucceed, data.ErrCode)
 		processingTime = processingTime + data.Time
 		if maxTime <= data.Time {
 			maxTime = data.Time

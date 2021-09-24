@@ -1,4 +1,4 @@
-package httplongclinet
+package client
 
 import (
 	"crypto/tls"
@@ -11,12 +11,12 @@ import (
 )
 
 var (
-	LangHttpClient *http.Client
+	LongHttpClient *http.Client
 	once           sync.Once
 )
 
-//初始化长连接客户端参数
-func CreateLangHttpClient(request *model.Request) {
+// CreateLongHttpClient 初始化长连接客户端参数
+func CreateLongHttpClient(request *model.Request) {
 	once.Do(func() {
 		tr := &http.Transport{}
 		if request.HTTP2 {
@@ -46,7 +46,7 @@ func CreateLangHttpClient(request *model.Request) {
 			}
 		}
 
-		LangHttpClient = &http.Client{
+		LongHttpClient = &http.Client{
 			Transport: tr,
 		}
 	})

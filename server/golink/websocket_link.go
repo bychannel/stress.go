@@ -1,4 +1,3 @@
-// Package golink 连接
 package golink
 
 import (
@@ -7,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bychannel/stress.go/helper"
 	"github.com/bychannel/stress.go/model"
 	"github.com/bychannel/stress.go/server/client"
+	"github.com/bychannel/stress.go/utils"
 )
 
 const (
@@ -88,7 +87,7 @@ func webSocketRequest(chanID uint64, ch chan<- *model.RequestResults, i uint64, 
 			errCode, isSucceed = request.GetVerifyWebSocket()(request, seq, msg)
 		}
 	}
-	requestTime := uint64(helper.DiffNano(startTime))
+	requestTime := uint64(utils.DiffNano(startTime))
 	statistics.RequestTimeList = append(statistics.RequestTimeList, requestTime)
 	requestResults := &model.RequestResults{
 		Time:      requestTime,

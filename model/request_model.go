@@ -24,7 +24,9 @@ const (
 	FormTypeGRPC      = "grpc"      // grpc协议
 )
 
-// 校验函数
+type VerifyHTTP func(request *Request, response *http.Response) (code int, isSucceed bool)
+type VerifyWebSocket func(request *Request, seq string, msg []byte) (code int, isSucceed bool)
+
 var (
 	verifyMapHTTP           = make(map[string]VerifyHTTP)      // http校验函数
 	verifyMapHTTPMutex      sync.RWMutex                       // http并发锁
@@ -40,25 +42,13 @@ func RegisterVerifyHTTP(verify string, verifyFunc VerifyHTTP) {
 	verifyMapHTTP[key] = verifyFunc
 }
 
-// RegisterVerifyWebSocket 注册 webSocket 校验函数
+// RegisterVerifyWebSocket 注册webSocket校验函数
 func RegisterVerifyWebSocket(verify string, verifyFunc VerifyWebSocket) {
 	verifyMapWebSocketMutex.Lock()
 	defer verifyMapWebSocketMutex.Unlock()
 	key := fmt.Sprintf("%s.%s", FormTypeWebSocket, verify)
 	verifyMapWebSocket[key] = verifyFunc
 }
-
-// Verify 验证器
-type Verify interface {
-	GetCode() int    // 有一个方法，返回code为200为成功
-	GetResult() bool // 返回是否成功
-}
-
-// VerifyHTTP http验证
-type VerifyHTTP func(request *Request, response *http.Response) (code int, isSucceed bool)
-
-// VerifyWebSocket webSocket验证
-type VerifyWebSocket func(request *Request, seq string, msg []byte) (code int, isSucceed bool)
 
 // Request 请求数据
 type Request struct {
@@ -218,23 +208,15 @@ func getHeaderValue(v string, headers map[string]string) {
 	}
 }
 
-// Print 格式化打印
 func (r *Request) Print() {
 	if r == nil {
 		return
 	}
-	result := fmt.Sprintf("request:\n form:%s \n url:%s \n method:%s \n headers:%v \n", r.Form, r.URL, r.Method,
-		r.Headers)
+	result := fmt.Sprintf("request:\n form:%s \n url:%s \n method:%s \n headers:%v \n", r.Form, r.URL, r.Method, r.Headers)
 	result = fmt.Sprintf("%s data:%v \n", result, r.Body)
 	result = fmt.Sprintf("%s verify:%s \n timeout:%s \n debug:%v \n", result, r.Verify, r.Timeout, r.Debug)
 	result = fmt.Sprintf("%s http2.0：%v \n keepalive：%v \n maxCon:%v ", result, r.HTTP2, r.Keepalive, r.MaxCon)
 	fmt.Println(result)
-	return
-}
-
-// GetDebug 获取 debug 参数
-func (r *Request) GetDebug() bool {
-	return r.Debug
 }
 
 // IsParameterLegal 参数是否合法

@@ -4,15 +4,13 @@ package client
 import (
 	"crypto/tls"
 	"github.com/bychannel/stress.go/model"
-	httplongclinet "github.com/bychannel/stress.go/server/client/http_longclinet"
 	"github.com/bychannel/stress.go/server/statistics"
+	"github.com/bychannel/stress.go/utils"
 	"golang.org/x/net/http2"
 	"log"
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/bychannel/stress.go/helper"
 )
 
 // logErr err
@@ -52,10 +50,10 @@ func HTTPRequest(request *model.Request) (resp *http.Response, requestTime uint6
 	}
 	var client *http.Client
 	if request.Keepalive == true {
-		client = httplongclinet.LangHttpClient
+		client = LongHttpClient
 		startTime := time.Now()
 		resp, err = client.Do(req)
-		requestTime = uint64(helper.DiffNano(startTime))
+		requestTime = uint64(utils.DiffNano(startTime))
 		statistics.RequestTimeList = append(statistics.RequestTimeList, requestTime)
 		if err != nil {
 			logErr.Println("请求失败:", err)
@@ -89,7 +87,7 @@ func HTTPRequest(request *model.Request) (resp *http.Response, requestTime uint6
 
 	startTime := time.Now()
 	resp, err = client.Do(req)
-	requestTime = uint64(helper.DiffNano(startTime))
+	requestTime = uint64(utils.DiffNano(startTime))
 	statistics.RequestTimeList = append(statistics.RequestTimeList, requestTime)
 	if err != nil {
 		logErr.Println("请求失败:", err)
